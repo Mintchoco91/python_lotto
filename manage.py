@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""Django's command-line utility for administrative tasks.testkw"""
+"""Django's command-line utility for administrative tasks.testkw2"""
 import os
 import sys
 
