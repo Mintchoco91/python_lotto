@@ -1,5 +1,10 @@
-#참고 사이트
+###참고 사이트
+
+#초반 셋팅
 https://blog.naver.com/PostView.nhn?blogId=93immm&logNo=220906677791
+
+#템플릿 경로 설정
+https://nachwon.github.io/django-8-template/
 
 ###계정
 
