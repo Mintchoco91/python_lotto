@@ -3,7 +3,7 @@ from django.db import models
 # Create your models here.
 
 # Lotto Infomation 
-class DjangoLottoBoard(models.Model):
+class lottoBoard(models.Model):
     round    = models.CharField(max_length=20, blank=False)
     number_1 = models.CharField(max_length=20, blank=False)
     number_2 = models.CharField(max_length=20, blank=False)
