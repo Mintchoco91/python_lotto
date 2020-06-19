@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'python_lotto_app',
+    'django_crontab'
 ]
 
 MIDDLEWARE = [
@@ -122,3 +123,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 10000
+
+CRONJOBS = [
+    ('*/5 * * * *', 'python_lotto_app.cron.weekly_insert')
+]
+
+
+

@@ -5,5 +5,7 @@ from django.urls import path
 app_name = 'python_lotto_app'
 
 urlpatterns = [
-    path('', views.selectList),
+    path('', views.index),
+    path('insert', views.insertData, name="insert"),
+    path('ajax', views.ajax, name="ajax")
 ]
