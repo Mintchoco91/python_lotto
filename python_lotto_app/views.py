@@ -1,6 +1,7 @@
 from .models import lottoBoard
 from django.views.generic import ListView, DetailView
 from django.shortcuts import render
+from django.shortcuts import redirect
 from django.db.models import Q
 from django.http import HttpResponse
 import requests
@@ -40,7 +41,7 @@ def index(request):
 # 로또 api 이용해서 데이터 insert
 def insertData(request):
 
-    for n in range(801, 916):
+    for n in range(816, 916):
         params = {
             'method': 'getLottoNumber',
             'drwNo': n
@@ -63,7 +64,7 @@ def insertData(request):
         )
         lotto.save()
 
-    return index(request)
+    return redirect("python_lotto_app:index")
 
 
 # 기간별 검색

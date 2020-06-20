@@ -127,7 +127,7 @@ STATIC_URL = '/static/'
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 10000
 
 CRONJOBS = [
-    ('*/5 * * * *', 'python_lotto_app.cron.weekly_insert')
+    ('* * * * *', 'python_lotto_app.cron.weekly_insert')
 ]
 
 
