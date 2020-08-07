@@ -15,53 +15,39 @@
 </head>
 <body>
     <h1>로또 번호 분석</h1>
-    
-    <!--
-    <table style="border:1px solid">
-        <tr>
-            <td style="width:60px;border:1px solid">회 차</td>
-            <td style="width:60px;border:1px solid">1번 번호</td>
-            <td style="width:60px;border:1px solid">2번 번호</td>
-            <td style="width:60px;border:1px solid">3번 번호</td>
-            <td style="width:60px;border:1px solid">4번 번호</td>
-            <td style="width:60px;border:1px solid">5번 번호</td>
-            <td style="width:60px;border:1px solid">6번 번호</td>
-            <td style="width:60px;border:1px solid">7번 번호</td>
-        </tr>
-        {% for lottoBoard in lottoBoard_list %}
-        <tr>
-            <td style="width:60px;border:1px solid">{{ lottoBoard.round }}</td>
-            <td style="width:60px;border:1px solid">{{ lottoBoard.number_1 }}</td>
-            <td style="width:60px;border:1px solid">{{ lottoBoard.number_2 }}</td>
-            <td style="width:60px;border:1px solid">{{ lottoBoard.number_3 }}</td>
-            <td style="width:60px;border:1px solid">{{ lottoBoard.number_4 }}</td>
-            <td style="width:60px;border:1px solid">{{ lottoBoard.number_5 }}</td>
-            <td style="width:60px;border:1px solid">{{ lottoBoard.number_6 }}</td>
-            <td style="width:60px;border:1px solid">{{ lottoBoard.number_7 }}</td>
-        </tr>
-        {% endfor %}
-    </table>
-    -->
-    
-    
-    <form id="form1" method="POST">
+    <pre>
+        숫자 6개 모두 일치하면 1등
+        숫자 5개 일치 + 보너스 번호 일치하면 2등
+        숫자 5개 일치하면 3등
+        숫자 4개 일치하면 4등(50000원)
+        숫자 3개 일치하면 5등(5000원)
+    </pre>
+    <!-- <form id="form1" method="POST">
         {% csrf_token %}
         <input type="date" name="start_date" id='datePicker1' min='2002-12-07'>
         <input type="date" name="end_date" id="datePicker2" min='2002-12-07'>
         <button type="button" onclick="ajaxSelect();">
             검색
         </button>
-    </form>
+    </form> -->
     
+    <hr>
+    
+    <form id="form2">
+        {% csrf_token %}
+        <input type="number" min="1" max="{{ last_round }}" value="{{ last_round }}" id="round" name="round">
+        <button type="button" onclick="analyze();">
+            분석
+        </button>
+    </form>
     
     <div id="container"></div>
     
+    
     <script>
-        document.getElementById('datePicker1').max = new Date().toISOString().split("T")[0];
-        document.getElementById('datePicker2').max = new Date().toISOString().split("T")[0];
-        document.getElementById('datePicker2').valueAsDate = new Date();
-        
-        
+        // document.getElementById('datePicker1').max = new Date().toISOString().split("T")[0];
+        // document.getElementById('datePicker2').max = new Date().toISOString().split("T")[0];
+        // document.getElementById('datePicker2').valueAsDate = new Date();
         
         var chart = Highcharts.chart('container', {
 
@@ -93,66 +79,117 @@
 
         series: [{
             type: 'column',
-            colorByPoint: true,
+            colorByPoint: false,
             data: {{ counts }},
             showInLegend: false
         }]
 
         });
         
-        function ajaxSelect(){
-            var date1 = $('#datePicker1').val();
-            var date2 = $('#datePicker2').val();
+        // function ajaxSelect(){
+        //     var date1 = $('#datePicker1').val();
+        //     var date2 = $('#datePicker2').val();
             
-            if (!date1 || !date2) {
-                alert('날짜를 입력해주세요');
-                return;
-            }else if(date1>date2){
-                alert('기간이 잘못 입력되었습니다');
-                return;
-            }
+        //     if (!date1 || !date2) {
+        //         alert('날짜를 입력해주세요');
+        //         return;
+        //     }else if(date1>date2){
+        //         alert('기간이 잘못 입력되었습니다');
+        //         return;
+        //     }
             
+        //     $.ajax({
+        //         url:"{% url 'python_lotto_app:ajax' %}",
+        //         type: 'POST',
+        //         data: $('#form1').serialize(),
+        //         dataType: "json",
+        //         success:function(result){
+        //             chart.update({
+        //                 title: {
+        //                     text: '총 '+result.total_round+'회차'
+        //                 },
+                        
+        //                 subtitle: {
+        //                     text: $('#datePicker1').val()+' ~ '+$('#datePicker2').val()
+        //                 },
+                        
+        //                 xAxis: {
+        //                     categories: result.numbers
+        //                 },
+                        
+        //                 yAxis:{
+        //                     plotLines: [{
+        //                         color: '#FF0000',
+        //                         width: 2,
+        //                         value: result.total_round*7/45,
+        //                         zIndex: 5,
+        //                         label: {
+        //                             text: '평균값 '+(result.total_round*7/45).toFixed(1),
+        //                             align: 'right',
+        //                             x: -10
+        //                         }
+        //                     }]
+        //                 },
+    
+        //                 series: [{
+        //                     data: result.counts
+        //                 }]
+        //             });
+        //         }
+        //     })
+        // }
+        
+        
+        function analyze(){
+            var num = $('#round').val();
             $.ajax({
-                url:"{% url 'python_lotto_app:ajax' %}",
+                url:"{% url 'python_lotto_app:analyze' %}",
                 type: 'POST',
-                data: $('#form1').serialize(),
+                data: {"round": num, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
                 dataType: "json",
                 success:function(result){
-                    chart.update({
-                        title: {
-                            text: '총 '+result.total_round+'회차'
-                        },
+                    
+                    Highcharts.chart('container', {
+
+                    title: {
+                        text: num+'회차'
+                    },
                         
-                        subtitle: {
-                            text: $('#datePicker1').val()+' ~ '+$('#datePicker2').val()
-                        },
-                        
-                        xAxis: {
-                            categories: result.numbers
-                        },
-                        
-                        yAxis:{
-                            plotLines: [{
-                                color: '#FF0000',
-                                width: 2,
-                                value: result.total_round*7/45,
-                                zIndex: 5,
-                                label: {
-                                    text: '평균값 '+(result.total_round*7/45).toFixed(1),
-                                    align: 'right',
-                                    x: -10
-                                }
-                            }]
-                        },
-    
-                        series: [{
-                            data: result.counts
+                    subtitle: {
+                        text: '로또 번호 분석'
+                    },
+
+
+                    xAxis: {
+                        categories: result.categories
+                    },
+
+                     yAxis:{
+                        plotLines: [{
+                            color: '#FF0000',
+                            width: 2,
+                            value: result.total_round*7/45,
+                            zIndex: 5,
+                            label: {
+                                text: '평균값 '+(result.total_round*7/45).toFixed(1),
+                                align: 'right',
+                                x: -10
+                            }                     
                         }]
+                    },
+
+                    series: [{
+                        type: 'column',
+                        colorByPoint: false,
+                        data: result.data,
+                        showInLegend: false
+                    }]
+
                     });
+                   
                 }
             })
         }
-        
         
    </script> 
 </body>
