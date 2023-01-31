@@ -14,18 +14,18 @@
 [Setting]
 
 [초기 install]
-pip3 install django-crontab
-pip3 install 'Django<4.0'
-pip3 install requests
+   - pip3 install django-crontab
+   - pip3 install 'Django<4.0'
+   - pip3 install requests
 
 [서버 실행]
-python manage.py runserver
+   - python manage.py runserver
 
 [접속]
-http://127.0.0.1:8000/python_lotto_app/
+   - http://127.0.0.1:8000/python_lotto_app/
 
 [로또번호 갱신방법]
-C:\lotto\python_lotto_app\views.py 에서 회차 수정
+   - C:\lotto\python_lotto_app\views.py 에서 회차 수정
 
-http://127.0.0.1:8000/python_lotto_app/insert
+   - http://127.0.0.1:8000/python_lotto_app/insert
 --------------------------
