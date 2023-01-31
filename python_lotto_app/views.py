@@ -41,7 +41,7 @@ def index(request):
 # 로또 api 이용해서 데이터 insert
 def insertData(request):
 
-    for n in range(917, 918):
+    for n in range(917, 1060):
         params = {
             'method': 'getLottoNumber',
             'drwNo': n

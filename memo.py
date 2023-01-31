@@ -1,7 +1,26 @@
-###참고 사이트
+##########################################################
+#앱 사용방법
+##########################################################
+[초기 install]
+pip3 install django-crontab
+pip3 install 'Django<4.0'
+pip3 install requests
 
-#초반 셋팅
-https://blog.naver.com/PostView.nhn?blogId=93immm&logNo=220906677791
+[서버 실행]
+python manage.py runserver
+
+[접속]
+http://127.0.0.1:8000/python_lotto_app/
+
+[로또번호 갱신방법]
+C:\lotto\python_lotto_app\views.py 에서 회차 수정
+
+http://127.0.0.1:8000/python_lotto_app/insert
+
+##########################################################
+
+
+###참고 사이트
 
 #템플릿 경로 설정
 https://nachwon.github.io/django-8-template/
@@ -12,19 +31,10 @@ https://nachwon.github.io/django-8-template/
 ID : admin
 PW : 1234
 
-
-
 ### 메모
 1. 프로젝트 설정 -> URL설정 -> 포트 변경
 # [서버기동]
-2. python manage.py runserver 0.0.0.0:8000 //구름은 이렇게해줘야함
-# [구름 IDE에서 브랜치처리]
-3_1. 새 브런치(local_branch) 생성
-3_2. 내용 수정 후 병합하기.
-3_3. 병합 후 git에 branch생성 되고 PR생김.
-3_4. merge 처리
-
-
+2. python manage.py runserver
 
 ### CMD 정리
 
@@ -48,3 +58,10 @@ python3 manage.py createsuperuser
 # Mysql 실행
 service mysql start
 mysql -p 
+
+----
+
+
+
+
+
