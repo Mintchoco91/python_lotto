@@ -188,7 +188,7 @@ def searchByRecent(request):
 
 
 # 특정 회차 분석
-def analyze(request):
+def searchBySpecific(request):
     num = request.POST.get('round')
     obj = lottoBoard.objects.get(round=num)
     
@@ -199,6 +199,11 @@ def analyze(request):
     winning_numbers.append(int(obj.number_4))
     winning_numbers.append(int(obj.number_5))
     winning_numbers.append(int(obj.number_6))
+
+    bonus_number = int(obj.number_7)
+
+    title = "당첨번호 : {0}, {1}, {2}, {3}, {4}, {5} / 보너스 번호 : {6}"
+    title = title.format(obj.number_1, obj.number_2, obj.number_3, obj.number_4, obj.number_5, obj.number_6, obj.number_7)
     
     
     list1 = []
@@ -207,13 +212,15 @@ def analyze(request):
     
     
     for i in range(1, 46):
-        count = lottoBoard.objects.exclude(round__gte=num).filter(
+        count = lottoBoard.objects.exclude(round__gt=num).filter(
             Q(number_1=i) | Q(number_2=i) | Q(number_3=i) | Q(number_4=i) | Q(number_5=i) | Q(number_6=i) | Q(number_7=i)
         ).count()
         dict1 = {}
         dict1['y'] = count
         if i in winning_numbers:
             dict1['color'] = 'black'
+        elif i == bonus_number:
+            dict1['color'] = 'orange'
         else:
             pass
             # dict1['color'] = 'blue'
@@ -228,6 +235,5 @@ def analyze(request):
     # print(categories)
     print(data)
 
-    result = {'categories': categories, 'data': data, 'total_round': num}
-    return HttpResponse(json.dumps(result), content_type="application/json")
-    # return redirect("python_lotto_app:index")
+    context = {'categories': categories, 'data': data, 'total_round': num, 'title' : title}
+    return JsonResponse(context)

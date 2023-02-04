@@ -11,5 +11,5 @@ urlpatterns = [
     path('searchByPeriod', views.searchByPeriod, name="searchByPeriod"),
     path('searchByRound', views.searchByRound, name="searchByRound"),
     path('searchByRecent', views.searchByRecent, name="searchByRecent"),
-    path('analyze', views.analyze, name="analyze"),
+    path('searchBySpecific', views.searchBySpecific, name="searchBySpecific"),
 ]
