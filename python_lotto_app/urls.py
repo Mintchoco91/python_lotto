@@ -7,7 +7,9 @@ app_name = 'python_lotto_app'
 urlpatterns = [
     path('', views.index, name="index"),
     path('insert', views.insertData, name="insert"),
-    path('ajax', views.ajax, name="ajax"),
+    path('renew', views.renew, name="renew"),
+    path('searchByPeriod', views.searchByPeriod, name="searchByPeriod"),
+    path('searchByRound', views.searchByRound, name="searchByRound"),
+    path('searchByRecent', views.searchByRecent, name="searchByRecent"),
     path('analyze', views.analyze, name="analyze"),
-    path('home/', views.home, name="home"),
 ]
