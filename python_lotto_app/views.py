@@ -162,8 +162,6 @@ def searchByRound(request):
 def searchByRecent(request):
     num = int(request.POST['num'])
 
-    title = "최근 " + str(num) + "회차"
-    
     list1 = []
     numbers = []
     counts = []
@@ -171,6 +169,7 @@ def searchByRecent(request):
 
     round2 = lottoBoard.objects.aggregate(Max('round'))['round__max']
     round1 = round2 - num + 1
+    title = str(round1) + " ~ " + str(round2)
 
     for i in range(1, 46):
         count = lottoBoard.objects.filter(round__range=(round1, round2)).filter(
